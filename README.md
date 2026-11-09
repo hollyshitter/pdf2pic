@@ -23,6 +23,36 @@ Windows 10/11 专用，绿色免安装，不用装 Python。
 
 > 整个文件夹必须一起移动。`_internal` 里是运行库，单独拷 `PDF2Pic.exe` 出去跑不起来。
 
+## 不放心 exe？
+
+合理。打包的 exe 本来就说不清里面塞了什么，杀软误报也多。三个替代方案，前两个不含任何二进制：
+
+| 方案 | 下载 | 需要什么 | 有没有二进制 |
+| --- | --- | --- | --- |
+| 便携版 | `PDF2Pic-v1.0.0-win64.zip` | 无 | 有 exe |
+| 源码包 | `PDF2Pic-v1.0.0-source.zip` | Python 3.10+ | **没有**，只有 .py |
+| wheel 包 | `PDF2Pic-1.0.0-py3-none-any.whl` | Python 3.10+ | **没有**，纯 Python |
+
+**源码包**：解压后双击 `install-source.bat`，它会检查 Python、检查 tkinter、装依赖、注册菜单，全程没有 exe。`pdf2pic.py` 六百来行，想逐行看随时能看。
+
+**wheel 包**：
+
+```bash
+pip install PDF2Pic-1.0.0-py3-none-any.whl
+pdf2pic --install          # 注册右键菜单
+pdf2pic --help
+```
+
+**核对下载的文件有没有被改过**：
+
+```powershell
+Get-FileHash PDF2Pic-v1.0.0-win64.zip -Algorithm SHA256
+```
+
+和 Release 里同一下载页的 `SHA256SUMS.txt` 对一下，一致就是原包，改一个字节都对不上。
+
+**还想验证 exe 是怎么来的**：`.github/workflows/build.yml` 是完整的构建脚本，打 tag 时由 GitHub 的服务器跑，从这份公开源码编译、打包、算校验值。也就是说这个 exe 不是在我本机上敲出来的，任何人都能复现。嫌不够还可以自己打包，见下面「打包」。
+
 ## 菜单项
 
 | 菜单项 | 分辨率 | 什么时候用 |
@@ -41,8 +71,12 @@ Windows 10/11 专用，绿色免安装，不用装 Python。
 
 需要 Python 3.10+，且必须是带 tkinter 的完整版（python.org 的安装包就行，微软商店版也没有问题，某些精简发行版没有）。
 
+最省事的办法是下 `PDF2Pic-v1.0.0-source.zip`，解压后双击 `install-source.bat`，它会自己检查环境、装依赖、注册菜单。
+
+手动来也行：
+
 ```bash
-pip install pymupdf pillow
+pip install -r requirements.txt
 python pdf2pic.py --install          # 注册右键菜单，指向当前脚本
 python pdf2pic.py 某某.pdf            # 也可以直接命令行转
 python pdf2pic.py --uninstall        # 取消

@@ -7,3 +7,5 @@ dist/
 venv/
 *.log
 release/
+
+*.egg-info/

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdf2pic"
+version = "1.0.0"
+description = "Right-click any PDF on Windows to convert it into a folder of images"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "hollyshitter" }]
+keywords = ["pdf", "image", "png", "jpeg", "context-menu", "windows"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+]
+dependencies = [
+    "pymupdf>=1.24",
+    "pillow>=10",
+]
+
+[project.urls]
+Homepage = "https://github.com/hollyshitter/pdf2pic"
+Repository = "https://github.com/hollyshitter/pdf2pic"
+
+[project.scripts]
+pdf2pic = "pdf2pic:main"
+
+[tool.setuptools]
+py-modules = ["pdf2pic"]
